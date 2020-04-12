@@ -10,7 +10,7 @@ The app fetches data from `_DATA.js`, a fake database.
 
 This project made use of the starter code provided by Udacity: [udacity/reactnd-project-would-you-rather-starter](https://github.com/udacity/reactnd-project-would-you-rather-starter)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and the [Redux+JS template](https://github.com/reduxjs/cra-template-redux).
 
 To run this project:
 
