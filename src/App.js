@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import HomePage from "./pages/HomePage";
-import { getAvailableUsers, logIn, logOut } from "./features/user/usersSlice";
+import logo from "./logo.svg";
+import { Counter } from "./features/counter/Counter";
+import { getAvailableUsers, logIn, logOut } from "./features/users/usersSlice";
 import * as DATA from "./services/_DATA";
 import "./App.css";
 
@@ -16,9 +16,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-      </Switch>
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <Counter />
+      </header>
     </div>
   );
 };
