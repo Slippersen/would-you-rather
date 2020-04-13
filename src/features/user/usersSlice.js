@@ -1,13 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({
-  name: "user",
+  name: "users",
   initialState: {
     loggedInUser: null,
-    // TODO: populate available users
     availableUsers: null
   },
   reducers: {
+    getAvailableUsers: (state, action) => {
+      state.availableUsers = action.payload;
+    },
     logIn: (state, action) => {
       // TODO: receive ID, map to available users
       state.loggedInUser = action.payload;
@@ -18,6 +20,6 @@ export const userSlice = createSlice({
   }
 });
 
-export const { logIn, logOut } = userSlice.actions;
+export const { getAvailableUsers, logIn, logOut } = userSlice.actions;
 
 export default userSlice.reducer;
