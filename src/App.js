@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import "./App.css";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <Switch>
@@ -11,6 +11,6 @@ function App() {
       </Switch>
     </div>
   );
-}
+};
 
 export default App;
