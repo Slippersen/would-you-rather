@@ -4,20 +4,22 @@ export const userSlice = createSlice({
   name: "users",
   initialState: {
     loggedInUser: null,
-    availableUsers: null
+    availableUsers: [],
   },
   reducers: {
     getAvailableUsers: (state, action) => {
-      state.availableUsers = action.payload;
+      state.availableUsers = Object.keys(action.payload).map(
+        (i) => action.payload[i]
+      );
     },
     logIn: (state, action) => {
       // TODO: receive ID, map to available users
       state.loggedInUser = action.payload;
     },
-    logOut: state => {
+    logOut: (state) => {
       state.loggedInUser = null;
-    }
-  }
+    },
+  },
 });
 
 export const { getAvailableUsers, logIn, logOut } = userSlice.actions;
