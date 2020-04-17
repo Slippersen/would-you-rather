@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setAvailableUsers, logIn, logOut } from "./features/users/usersSlice";
+import { setAvailableUsers } from "./features/users/usersSlice";
 import * as DATA from "./services/_DATA";
 import UsersList from "./components/UsersList";
 import "./App.css";
@@ -13,14 +13,10 @@ const App = () => {
     DATA._getUsers().then((data) => dispatch(setAvailableUsers(data)));
   }, [dispatch]);
 
-  // if (loggedInUser == null) {
-  //   return <h1>LOG IN</h1>;
-  // }
-
   return (
     <div className="App">
       <header className="App-header"></header>
-      <UsersList />
+      { !loggedInUser ? <UsersList /> : <h1>Logged in</h1> }
     </div>
   );
 };
