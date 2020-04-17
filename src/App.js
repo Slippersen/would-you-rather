@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAvailableUsers, logIn, logOut } from "./features/users/usersSlice";
+import { setAvailableUsers, logIn, logOut } from "./features/users/usersSlice";
 import * as DATA from "./services/_DATA";
 import UsersList from "./components/UsersList";
 import "./App.css";
@@ -10,7 +10,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    DATA._getUsers().then((data) => dispatch(getAvailableUsers(data)));
+    DATA._getUsers().then((data) => dispatch(setAvailableUsers(data)));
   }, [dispatch]);
 
   // if (loggedInUser == null) {

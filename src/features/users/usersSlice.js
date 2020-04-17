@@ -7,7 +7,7 @@ export const userSlice = createSlice({
     availableUsers: [],
   },
   reducers: {
-    getAvailableUsers: (state, action) => {
+    setAvailableUsers: (state, action) => {
       state.availableUsers = Object.keys(action.payload).map(
         (i) => action.payload[i]
       );
@@ -22,6 +22,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { getAvailableUsers, logIn, logOut } = userSlice.actions;
+export const { setAvailableUsers, logIn, logOut } = userSlice.actions;
 
 export default userSlice.reducer;
