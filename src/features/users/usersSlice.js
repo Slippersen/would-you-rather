@@ -13,7 +13,7 @@ export const userSlice = createSlice({
       );
     },
     logIn: (state, action) => {
-      // TODO: receive ID, map to available users
+      // TODO: persist state upon refresh
       state.loggedInUser = action.payload;
     },
     logOut: (state) => {
