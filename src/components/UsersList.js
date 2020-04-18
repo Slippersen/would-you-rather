@@ -4,12 +4,24 @@ import styled from "styled-components";
 import { logIn } from "../features/users/usersSlice";
 import loadingGif from "../loading.gif";
 
-const StyledList = styled.ul`
-  list-style: none;
+const UsersListContainer = styled.div`
+  background-color: #FAFAFA;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 24px 48px;
+`;
+
+const StyledHeader = styled.p`
+  font-weight: bold;
 `;
 
 const StyledListEntry = styled.li`
   cursor: pointer;
+  text-align: left;
+
+  :hover {
+    text-decoration: underline;
+  }
 `;
 
 const StyledLoadingGif = styled.img`
@@ -29,11 +41,19 @@ const UsersList = () => {
   }
 
   return (
-    <StyledList>
-      {availableUsers?.map((user) => (
-        <StyledListEntry key={user.id} onClick={() => logInUser(dispatch, user)}>{user.name}</StyledListEntry>
-      ))}
-    </StyledList>
+    <UsersListContainer>
+      <StyledHeader>Select your user:</StyledHeader>
+      <ol>
+        {availableUsers?.map((user) => (
+          <StyledListEntry
+            key={user.id}
+            onClick={() => logInUser(dispatch, user)}
+          >
+            {user.name}
+          </StyledListEntry>
+        ))}
+      </ol>
+    </UsersListContainer>
   );
 };
 
