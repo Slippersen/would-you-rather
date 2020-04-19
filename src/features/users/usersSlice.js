@@ -4,7 +4,10 @@ import * as DATA from "../../services/_DATA";
 export const userSlice = createSlice({
   name: "users",
   initialState: {
-    loggedInUser: null,
+    loggedInUser:
+      sessionStorage.getItem("loggedInUser") != null
+        ? JSON.parse(sessionStorage.getItem("loggedInUser"))
+        : null,
     availableUsers: [],
   },
   reducers: {
@@ -14,11 +17,15 @@ export const userSlice = createSlice({
       );
     },
     logIn: (state, action) => {
-      // TODO: persist state upon refresh
       state.loggedInUser = action.payload;
+      sessionStorage.setItem(
+        "loggedInUser",
+        JSON.stringify(state.loggedInUser)
+      );
     },
     logOut: (state) => {
       state.loggedInUser = null;
+      sessionStorage.setItem("loggedInUser", null);
     },
   },
 });
