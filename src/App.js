@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { setAvailableUsersAsync, logOut } from "./features/users/usersSlice";
+import { setAvailableUsersAsync, logOut } from "./app/usersSlice";
 import UsersList from "./components/UsersList";
-import "./App.css";
+import "./style/App.css";
 
 const StyledHeader = styled.header`
   position: absolute;
   top: 0;
   width: 100%;
-  background-color: #FEFEFE;
+  background-color: #fefefe;
   border-bottom: 1px solid lightgray;
   padding: 24px 0;
   font-size: 1.5rem;

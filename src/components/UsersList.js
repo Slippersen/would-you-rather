@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { logIn } from "../features/users/usersSlice";
-import loadingGif from "../loading.gif";
+import { logIn } from "../app/usersSlice";
+import loadingGif from "../img/loading.gif";
 
 const UsersListContainer = styled.div`
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   border: 1px solid lightgray;
   border-radius: 5px;
   padding: 24px 48px;
