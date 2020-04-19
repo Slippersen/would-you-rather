@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import * as DATA from "../../services/_DATA";
 
 export const userSlice = createSlice({
   name: "users",
@@ -23,5 +24,11 @@ export const userSlice = createSlice({
 });
 
 export const { setAvailableUsers, logIn, logOut } = userSlice.actions;
+
+export const setAvailableUsersAsync = () => (dispatch) => {
+  DATA._getUsers()
+    .then((data) => dispatch(setAvailableUsers(data)))
+    .catch((error) => console.log(error));
+};
 
 export default userSlice.reducer;

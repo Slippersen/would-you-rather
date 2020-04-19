@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { setAvailableUsers, logOut } from "./features/users/usersSlice";
-import * as DATA from "./services/_DATA";
+import { setAvailableUsersAsync, logOut } from "./features/users/usersSlice";
 import UsersList from "./components/UsersList";
 import "./App.css";
 
@@ -38,7 +37,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    DATA._getUsers().then((data) => dispatch(setAvailableUsers(data)));
+    dispatch(setAvailableUsersAsync());
   }, [dispatch]);
 
   return (
