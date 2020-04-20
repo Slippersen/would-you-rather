@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setAvailableUsersAsync, logOut } from "./app/usersSlice";
+import { setQuestionsAsync } from "./app/questionsSlice";
 import UsersList from "./components/UsersList";
+import QuestionsList from "./components/QuestionsList";
 import "./style/App.css";
 
 const StyledHeader = styled.header`
@@ -38,6 +40,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(setAvailableUsersAsync());
+    dispatch(setQuestionsAsync());
   }, [dispatch]);
 
   return (
@@ -54,7 +57,7 @@ const App = () => {
           </StyledUsername>
         )}
       </StyledHeader>
-      {!loggedInUser ? <UsersList /> : <h1>Logged in</h1>}
+      {!loggedInUser ? <UsersList /> : <QuestionsList />}
     </div>
   );
 };

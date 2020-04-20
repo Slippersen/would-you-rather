@@ -15,6 +15,11 @@ const StyledHeader = styled.p`
   font-weight: bold;
 `;
 
+const StyledList = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
 const StyledListEntry = styled.li`
   cursor: pointer;
   text-align: left;
@@ -43,7 +48,7 @@ const UsersList = () => {
   return (
     <UsersListContainer>
       <StyledHeader>Select your user:</StyledHeader>
-      <ol>
+      <StyledList>
         {availableUsers?.map((user) => (
           <StyledListEntry
             key={user.id}
@@ -52,7 +57,7 @@ const UsersList = () => {
             {user.name}
           </StyledListEntry>
         ))}
-      </ol>
+      </StyledList>
     </UsersListContainer>
   );
 };
