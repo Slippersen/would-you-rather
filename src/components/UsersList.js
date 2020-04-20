@@ -23,10 +23,23 @@ const StyledList = styled.ul`
 const StyledListEntry = styled.li`
   cursor: pointer;
   text-align: left;
+  vertical-align: middle;
+  margin-top: 32px;
+  margin-bottom: 16px;
 
   :hover {
     text-decoration: underline;
   }
+`;
+
+const StyledAvatar = styled.img`
+  height: 48px;
+`;
+
+const StyledUserName = styled.b`
+  position: relative;
+  left: 8px;
+  bottom: 20px;
 `;
 
 const StyledLoadingGif = styled.img`
@@ -54,7 +67,8 @@ const UsersList = () => {
             key={user.id}
             onClick={() => logInUser(dispatch, user)}
           >
-            {user.name}
+            <StyledAvatar src={user.avatarURL} alt={user.name}/>
+            <StyledUserName>{user.name}</StyledUserName>
           </StyledListEntry>
         ))}
       </StyledList>
