@@ -15,15 +15,11 @@ export const questionsSlice = createSlice({
     },
     askQuestion: (state, action) => {
       state.questions = state.questions.concat([action.payload]);
-    }
+    },
   },
 });
 
-export const {
-  setQuestions,
-  askQuestion,
-  answerQuestion,
-} = questionsSlice.actions;
+export const { setQuestions, askQuestion } = questionsSlice.actions;
 
 export const setQuestionsAsync = () => (dispatch) => {
   DATA._getQuestions()
@@ -46,6 +42,7 @@ export const answerQuestionAsync = (authedUser, qid, answer) => (dispatch) => {
   DATA._saveQuestionAnswer(authedUser, qid, answer)
     .then(() => {
       dispatch(setQuestionsAsync());
+      // Update questions and answers stored on user object
       dispatch(setAvailableUsersAsync());
     })
     .catch((error) => console.log(error));
