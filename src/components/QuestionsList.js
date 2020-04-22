@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import loadingGif from "../img/loading.gif";
@@ -58,10 +59,12 @@ const QuestionsList = () => {
             (question) =>
               !question.optionOne.votes.includes(loggedInUser.id) &&
               !question.optionTwo.votes.includes(loggedInUser.id) && (
-                <StyledListEntry key={question.id}>
-                  {question.optionOne.text} or {question.optionTwo.text} (
-                  {question.author})
-                </StyledListEntry>
+                <Link to={`/question/${question.id}`}>
+                  <StyledListEntry key={question.id}>
+                    {question.optionOne.text} or {question.optionTwo.text} (
+                    {question.author})
+                  </StyledListEntry>
+                </Link>
               )
           )}
         </StyledList>
@@ -73,10 +76,12 @@ const QuestionsList = () => {
             (question) =>
               (question.optionOne.votes.includes(loggedInUser.id) ||
                 question.optionTwo.votes.includes(loggedInUser.id)) && (
-                <StyledListEntry key={question.id}>
-                  {question.optionOne.text} or {question.optionTwo.text} (
-                  {question.author})
-                </StyledListEntry>
+                <Link to={`/question/${question.id}`}>
+                  <StyledListEntry key={question.id}>
+                    {question.optionOne.text} or {question.optionTwo.text} (
+                    {question.author})
+                  </StyledListEntry>
+                </Link>
               )
           )}
         </StyledList>

@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
+import { Route, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setAvailableUsersAsync, logOut } from "./app/usersSlice";
 import { setQuestionsAsync } from "./app/questionsSlice";
 import UsersList from "./components/UsersList";
 import QuestionsList from "./components/QuestionsList";
+import Question from "./components/Question";
 import "./style/App.css";
 
 const StyledHeader = styled.header`
@@ -32,6 +34,7 @@ const StyledLogoutLink = styled.span`
 
 const logOutUser = (dispatch) => {
   dispatch(logOut());
+  window.location.href = "/";
 };
 
 const App = () => {
@@ -49,7 +52,7 @@ const App = () => {
         would-you-rather
         {loggedInUser && (
           <StyledUsername>
-            {loggedInUser?.name}
+            {loggedInUser.name}
             <br />
             <StyledLogoutLink onClick={() => logOutUser(dispatch)}>
               (log out)
@@ -57,7 +60,10 @@ const App = () => {
           </StyledUsername>
         )}
       </StyledHeader>
-      {!loggedInUser ? <UsersList /> : <QuestionsList />}
+      <Switch>
+        <Route exact path="/" component={!loggedInUser ? UsersList : QuestionsList} />
+        <Route path="/question/:qid" component={!loggedInUser ? UsersList : Question} />
+      </Switch>
     </div>
   );
 };
