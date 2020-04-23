@@ -59,12 +59,12 @@ const QuestionsList = () => {
             (question) =>
               !question.optionOne.votes.includes(loggedInUser.id) &&
               !question.optionTwo.votes.includes(loggedInUser.id) && (
-                <Link to={`/question/${question.id}`}>
-                  <StyledListEntry key={question.id}>
+                <StyledListEntry key={question.id}>
+                  <Link to={`/question/${question.id}`}>
                     {question.optionOne.text} or {question.optionTwo.text} (
                     {question.author})
-                  </StyledListEntry>
-                </Link>
+                  </Link>
+                </StyledListEntry>
               )
           )}
         </StyledList>
@@ -76,12 +76,12 @@ const QuestionsList = () => {
             (question) =>
               (question.optionOne.votes.includes(loggedInUser.id) ||
                 question.optionTwo.votes.includes(loggedInUser.id)) && (
-                <Link to={`/question/${question.id}`}>
-                  <StyledListEntry key={question.id}>
+                <StyledListEntry key={question.id}>
+                  <Link to={`/question/${question.id}`}>
                     {question.optionOne.text} or {question.optionTwo.text} (
                     {question.author})
-                  </StyledListEntry>
-                </Link>
+                  </Link>
+                </StyledListEntry>
               )
           )}
         </StyledList>
