@@ -41,7 +41,7 @@ export const askQuestionAsync = (question) => (dispatch) => {
 };
 
 export const answerQuestionAsync = (authedUser, qid, answer) => (dispatch) => {
-  DATA._saveQuestionAnswer(authedUser, qid, answer)
+  DATA._saveQuestionAnswer({ authedUser, qid, answer })
     .then(() => {
       dispatch(setQuestionsAsync());
       // Update questions and answers stored on user object

@@ -34,11 +34,8 @@ const StyledOption = styled.span`
   }
 `;
 
-const answerQuestion = (dispatch, loggedInUser, questionId, answer) => {
-  
-  // TODO
-
-  dispatch(answerQuestionAsync(loggedInUser, questionId, answer));
+const answerQuestion = (dispatch, loggedInUserId, questionId, answer) => {
+  dispatch(answerQuestionAsync(loggedInUserId, questionId, answer));
 };
 
 const Question = ({ match }) => {
@@ -60,21 +57,6 @@ const Question = ({ match }) => {
     return <StyledLoadingGif src={loadingGif} alt="Loading animation" />;
   }
 
-  // example question:
-  //   "6ni6ok3ym7mf1p33lnez": {
-  //     id: '6ni6ok3ym7mf1p33lnez',
-  //     author: 'johndoe',
-  //     timestamp: 1468479767190,
-  //     optionOne: {
-  //       votes: [],
-  //       text: 'become a superhero',
-  //     },
-  //     optionTwo: {
-  //       votes: ['johndoe', 'sarahedo'],
-  //       text: 'become a supervillain'
-  //     }
-  //   },
-
   return (
     question && (
       <QuestionContainer>
@@ -83,9 +65,9 @@ const Question = ({ match }) => {
           onClick={() =>
             answerQuestion(
               dispatch,
-              loggedInUser,
+              loggedInUser.id,
               question.id,
-              question.optionOne.text
+              'optionOne'
             )
           }
         >
@@ -95,9 +77,9 @@ const Question = ({ match }) => {
           onClick={() =>
             answerQuestion(
               dispatch,
-              loggedInUser,
+              loggedInUser.id,
               question.id,
-              question.optionTwo.text
+              'optionTwo'
             )
           }
         >
