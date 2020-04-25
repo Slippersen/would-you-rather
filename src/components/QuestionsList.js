@@ -55,35 +55,37 @@ const QuestionsList = () => {
       <QuestionsCategoryContainer>
         <StyledHeader>Unanswered questions</StyledHeader>
         <StyledList>
-          {questions?.map(
-            (question) =>
-              !question.optionOne.votes.includes(loggedInUser.id) &&
-              !question.optionTwo.votes.includes(loggedInUser.id) && (
-                <Link to={`/question/${question.id}`}>
+          {questions
+            ?.map(
+              (question) =>
+                !question.optionOne.votes.includes(loggedInUser.id) &&
+                !question.optionTwo.votes.includes(loggedInUser.id) && (
                   <StyledListEntry key={question.id}>
-                    {question.optionOne.text} or {question.optionTwo.text} (
-                    {question.author})
+                    <Link to={`/question/${question.id}`}>
+                      {question.optionOne.text} or {question.optionTwo.text} (
+                      {question.author})
+                    </Link>
                   </StyledListEntry>
-                </Link>
-              )
-          )}
+                )
+            )}
         </StyledList>
       </QuestionsCategoryContainer>
       <QuestionsCategoryContainer>
         <StyledHeader>Answered questions</StyledHeader>
         <StyledList>
-          {questions?.map(
-            (question) =>
-              (question.optionOne.votes.includes(loggedInUser.id) ||
-                question.optionTwo.votes.includes(loggedInUser.id)) && (
-                <Link to={`/question/${question.id}`}>
+          {questions
+            ?.map(
+              (question) =>
+                (question.optionOne.votes.includes(loggedInUser.id) ||
+                  question.optionTwo.votes.includes(loggedInUser.id)) && (
                   <StyledListEntry key={question.id}>
-                    {question.optionOne.text} or {question.optionTwo.text} (
-                    {question.author})
+                    <Link to={`/question/${question.id}`}>
+                      {question.optionOne.text} or {question.optionTwo.text} (
+                      {question.author})
+                    </Link>
                   </StyledListEntry>
-                </Link>
-              )
-          )}
+                )
+            )}
         </StyledList>
       </QuestionsCategoryContainer>
     </QuestionsListContainer>
