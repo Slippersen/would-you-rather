@@ -9,12 +9,14 @@ export const questionsSlice = createSlice({
   },
   reducers: {
     setQuestions: (state, action) => {
-      state.questions = Object.keys(action.payload).map(
-        (i) => action.payload[i]
-      ).sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
+      state.questions = Object.keys(action.payload)
+        .map((i) => action.payload[i])
+        .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
     },
     askQuestion: (state, action) => {
-      state.questions = state.questions.unshift(action.payload);
+      state.questions = state.questions
+        .concat([action.payload])
+        .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
     },
   },
 });
