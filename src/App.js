@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setAvailableUsersAsync, logOut } from "./app/usersSlice";
 import { setQuestionsAsync } from "./app/questionsSlice";
 import UsersList from "./components/UsersList";
 import QuestionsList from "./components/QuestionsList";
+import Leaderboard from "./components/Leaderboard";
 import Question from "./components/Question";
 import "./style/App.css";
 
@@ -19,8 +20,19 @@ const StyledHeader = styled.header`
   font-size: 1.5rem;
 `;
 
+const StyledAppName = styled.span`
+  display: flex;
+  margin-left: 24px;
+`;
+
+const StyledMenu = styled.span`
+  align-content: center;
+  margin-left: 24px;
+`;
+
 const StyledUsername = styled.span`
   position: absolute;
+  top: 24px;
   right: 24px;
   font-size: 12px;
 `;
@@ -30,6 +42,11 @@ const StyledLogoutLink = styled.span`
     cursor: pointer;
     text-decoration: underline;
   }
+`;
+
+const StyledMenuItem = styled.span`
+  padding: 0 8px;
+  font-size: 16px;
 `;
 
 const logOutUser = (dispatch) => {
@@ -49,7 +66,18 @@ const App = () => {
   return (
     <div className="App">
       <StyledHeader>
-        would-you-rather
+        <StyledAppName>would-you-rather</StyledAppName>
+        <StyledMenu>
+          <Link to="/">
+            <StyledMenuItem>Home</StyledMenuItem>
+          </Link>
+          <Link to="/new-question">
+            <StyledMenuItem>New question</StyledMenuItem>
+          </Link>
+          <Link to="/leaderboard">
+            <StyledMenuItem>Leaderboard</StyledMenuItem>
+          </Link>
+        </StyledMenu>
         {loggedInUser && (
           <StyledUsername>
             {loggedInUser.name}
@@ -61,8 +89,27 @@ const App = () => {
         )}
       </StyledHeader>
       <Switch>
-        <Route exact path="/" component={!loggedInUser ? UsersList : QuestionsList} />
-        <Route path="/question/:qid" component={!loggedInUser ? UsersList : Question} />
+        <Route
+          exact
+          path="/"
+          component={!loggedInUser ? UsersList : QuestionsList}
+        />
+        <Route
+          path="/leaderboard"
+          component={!loggedInUser ? UsersList : Leaderboard}
+        />
+        <Route
+          path="/question/:qid"
+          component={!loggedInUser ? UsersList : Question}
+        />
+        <Route
+          render={() => (
+            <>
+              <p>There's nothing here.</p>
+              <Link to="/">Go home</Link>
+            </>
+          )}
+        />
       </Switch>
     </div>
   );
