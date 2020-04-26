@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import loadingGif from "../img/loading.gif";
 
-const QuestionsListContainer = styled.div`
+const Container = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background-color: #fafafa;
   border: 1px solid lightgray;
   border-radius: 5px;
@@ -13,28 +13,22 @@ const QuestionsListContainer = styled.div`
   margin: 24px;
 `;
 
-const QuestionsCategoryContainer = styled.div`
-  display: inline-block;
-  max-width: 40%;
-  margin: 0 5%;
-`;
-
 const StyledHeader = styled.p`
   font-weight: bold;
 `;
 
-const StyledList = styled.ul`
-  /* list-style: none; */
-  /* padding: 0; */
+const StyledList = styled.ol`
+  display: block;
 `;
 
 const StyledListEntry = styled.li`
-  cursor: pointer;
   text-align: left;
+  margin-bottom: 8px;
+`;
 
-  :hover {
-    text-decoration: underline;
-  }
+const StyledAvatar = styled.img`
+  display: inline-block;
+  height: 24px;
 `;
 
 const StyledLoadingGif = styled.img`
@@ -43,48 +37,50 @@ const StyledLoadingGif = styled.img`
 
 const Leaderboard = () => {
   const users = useSelector((state) => state.users.availableUsers);
+  const [orderedLeadersList, setOrderedLeadersList] = useState(null);
 
-  if (users.length === 0) {
+  useEffect(() => {
+    if (users) {
+      let orderedList = users
+        .map((user) => {
+          return {
+            id: user.id,
+            name: user.name,
+            avatar: user.avatarURL,
+            questionsAsked: user.questions.length,
+            questionsAnswered: Object.keys(user.answers).length,
+          };
+        })
+        .sort((a, b) =>
+          a.questionsAsked + a.questionsAnswered >
+          b.questionsAsked + b.questionsAnswered
+            ? -1
+            : 1
+        );
+      setOrderedLeadersList(orderedList);
+    }
+  }, [users]);
+
+  if (orderedLeadersList == null) {
     return <StyledLoadingGif src={loadingGif} alt="Loading animation" />;
   }
 
   return (
-    <QuestionsListContainer>
-      {/* <QuestionsCategoryContainer>
-        <StyledHeader>Unanswered questions</StyledHeader>
-        <StyledList>
-          {questions?.map(
-            (question) =>
-              !question.optionOne.votes.includes(loggedInUser.id) &&
-              !question.optionTwo.votes.includes(loggedInUser.id) && (
-                <StyledListEntry key={question.id}>
-                  <Link to={`/question/${question.id}`}>
-                    {question.optionOne.text} or {question.optionTwo.text} (
-                    {question.author})
-                  </Link>
-                </StyledListEntry>
-              )
-          )}
-        </StyledList>
-      </QuestionsCategoryContainer>
-      <QuestionsCategoryContainer>
-        <StyledHeader>Answered questions</StyledHeader>
-        <StyledList>
-          {questions?.map(
-            (question) =>
-              (question.optionOne.votes.includes(loggedInUser.id) ||
-                question.optionTwo.votes.includes(loggedInUser.id)) && (
-                <StyledListEntry key={question.id}>
-                  <Link to={`/question/${question.id}`}>
-                    {question.optionOne.text} or {question.optionTwo.text} (
-                    {question.author})
-                  </Link>
-                </StyledListEntry>
-              )
-          )}
-        </StyledList>
-      </QuestionsCategoryContainer> */}
-    </QuestionsListContainer>
+    <Container>
+      <StyledHeader>Leaderboard</StyledHeader>
+      <StyledList>
+        {orderedLeadersList &&
+          orderedLeadersList.map((user) => (
+            <StyledListEntry key={user.id}>
+              <StyledAvatar src={user.avatar} alt="avatar" />
+              <span>
+                {user.id} ({user.questionsAsked} questions asked,{" "}
+                {user.questionsAnswered} questions answered)&nbsp;
+              </span>
+            </StyledListEntry>
+          ))}
+      </StyledList>
+    </Container>
   );
 };
 
