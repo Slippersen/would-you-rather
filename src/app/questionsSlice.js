@@ -9,12 +9,14 @@ export const questionsSlice = createSlice({
   },
   reducers: {
     setQuestions: (state, action) => {
-      state.questions = Object.keys(action.payload).map(
-        (i) => action.payload[i]
-      );
+      state.questions = Object.keys(action.payload)
+        .map((i) => action.payload[i])
+        .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
     },
     askQuestion: (state, action) => {
-      state.questions = state.questions.concat([action.payload]);
+      state.questions = state.questions
+        .concat([action.payload])
+        .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
     },
   },
 });
@@ -39,7 +41,7 @@ export const askQuestionAsync = (question) => (dispatch) => {
 };
 
 export const answerQuestionAsync = (authedUser, qid, answer) => (dispatch) => {
-  DATA._saveQuestionAnswer(authedUser, qid, answer)
+  DATA._saveQuestionAnswer({ authedUser, qid, answer })
     .then(() => {
       dispatch(setQuestionsAsync());
       // Update questions and answers stored on user object
