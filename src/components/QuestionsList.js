@@ -60,7 +60,7 @@ const QuestionsList = () => {
               !question.optionOne.votes.includes(loggedInUser.id) &&
               !question.optionTwo.votes.includes(loggedInUser.id) && (
                 <StyledListEntry key={question.id}>
-                  <Link to={`/question/${question.id}`}>
+                  <Link to={`/questions/${question.id}`}>
                     {question.optionOne.text} or {question.optionTwo.text} (
                     {question.author})
                   </Link>
@@ -77,7 +77,7 @@ const QuestionsList = () => {
               (question.optionOne.votes.includes(loggedInUser.id) ||
                 question.optionTwo.votes.includes(loggedInUser.id)) && (
                 <StyledListEntry key={question.id}>
-                  <Link to={`/question/${question.id}`}>
+                  <Link to={`/questions/${question.id}`}>
                     {question.optionOne.text} or {question.optionTwo.text} (
                     {question.author})
                   </Link>

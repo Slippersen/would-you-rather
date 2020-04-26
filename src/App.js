@@ -71,7 +71,7 @@ const App = () => {
           <Link to="/">
             <StyledMenuItem>Home</StyledMenuItem>
           </Link>
-          <Link to="/new-question">
+          <Link to="/add">
             <StyledMenuItem>New question</StyledMenuItem>
           </Link>
           <Link to="/leaderboard">
@@ -99,7 +99,7 @@ const App = () => {
           component={!loggedInUser ? UsersList : Leaderboard}
         />
         <Route
-          path="/question/:qid"
+          path="/questions/:qid"
           component={!loggedInUser ? UsersList : Question}
         />
         <Route

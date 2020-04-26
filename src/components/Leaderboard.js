@@ -73,6 +73,7 @@ const Leaderboard = () => {
           orderedLeadersList.map((user) => (
             <StyledListEntry key={user.id}>
               <StyledAvatar src={user.avatar} alt="avatar" />
+              &nbsp;
               <span>
                 {user.id} ({user.questionsAsked} questions asked,{" "}
                 {user.questionsAnswered} questions answered)&nbsp;
