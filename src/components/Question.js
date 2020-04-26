@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import loadingGif from "../img/loading.gif";
@@ -26,12 +27,24 @@ const StyledOption = styled.span`
   border: 1px solid lightgray;
   border-radius: 5px;
   padding: 16px;
-  margin: 16px;  
+  margin: 16px;
 
   :hover {
     cursor: pointer;
     background-color: #fefefe;
   }
+`;
+
+const StyledResult = styled.span`
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 16px;
+  margin: 16px;
+`;
+
+const StyledLink = styled.p`
+  margin-top: 48px;
+  margin-bottom: 0;
 `;
 
 const answerQuestion = (dispatch, loggedInUserId, questionId, answer) => {
@@ -44,6 +57,7 @@ const Question = ({ match }) => {
   const questions = useSelector((state) => state.questions.questions);
 
   const [question, setQuestion] = useState(null);
+  const [isAnswered, setIsAnswered] = useState(false);
 
   useEffect(() => {
     if (match.params.qid && questions) {
@@ -53,6 +67,15 @@ const Question = ({ match }) => {
     }
   }, [match.params.qid, questions]);
 
+  useEffect(() => {
+    if (loggedInUser && question) {
+      setIsAnswered(
+        question.optionOne.votes.includes(loggedInUser.id) ||
+          question.optionTwo.votes.includes(loggedInUser.id)
+      );
+    }
+  }, [loggedInUser, question]);
+
   if (question == null) {
     return <StyledLoadingGif src={loadingGif} alt="Loading animation" />;
   }
@@ -60,32 +83,56 @@ const Question = ({ match }) => {
   return (
     question && (
       <QuestionContainer>
-        <StyledHeader>Would you rather ...</StyledHeader>
-        <StyledOption
-          onClick={() =>
-            answerQuestion(
-              dispatch,
-              loggedInUser.id,
-              question.id,
-              'optionOne'
-            )
-          }
-        >
-          {question.optionOne.text}
-        </StyledOption>
-        <StyledOption
-          onClick={() =>
-            answerQuestion(
-              dispatch,
-              loggedInUser.id,
-              question.id,
-              'optionTwo'
-            )
-          }
-        >
-          {question.optionTwo.text}
-        </StyledOption>
-        <br />
+        <StyledHeader>
+          {!isAnswered ? "Would you rather ..." : "Results"}
+        </StyledHeader>
+        {!isAnswered ? (
+          <>
+            <StyledOption
+              onClick={() =>
+                answerQuestion(
+                  dispatch,
+                  loggedInUser.id,
+                  question.id,
+                  "optionOne"
+                )
+              }
+            >
+              {question.optionOne.text}
+            </StyledOption>
+            <StyledOption
+              onClick={() =>
+                answerQuestion(
+                  dispatch,
+                  loggedInUser.id,
+                  question.id,
+                  "optionTwo"
+                )
+              }
+            >
+              {question.optionTwo.text}
+            </StyledOption>
+            <br />
+          </>
+        ) : (
+          <>
+            <StyledResult>
+              {question.optionOne.text} ({question.optionOne.votes.length} votes
+              {question.optionOne.votes.includes(loggedInUser.id) &&
+                " - including yours"}
+              )
+            </StyledResult>
+            <StyledResult>
+              {question.optionTwo.text} ({question.optionTwo.votes.length} votes
+              {question.optionTwo.votes.includes(loggedInUser.id) &&
+                " - including yours"}
+              )
+            </StyledResult>
+            <Link to="/">
+              <StyledLink>Return to question list</StyledLink>
+            </Link>
+          </>
+        )}
       </QuestionContainer>
     )
   );
