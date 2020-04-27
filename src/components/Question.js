@@ -47,6 +47,11 @@ const StyledLink = styled.p`
   margin-bottom: 0;
 `;
 
+const StyledAvatar = styled.img`
+  display: inline-block;
+  height: 48px;
+`;
+
 const answerQuestion = (dispatch, loggedInUserId, questionId, answer) => {
   dispatch(answerQuestionAsync(loggedInUserId, questionId, answer));
 };
@@ -55,9 +60,11 @@ const Question = ({ match }) => {
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.users.loggedInUser);
   const questions = useSelector((state) => state.questions.questions);
+  const users = useSelector((state) => state.users.availableUsers);
 
   const [question, setQuestion] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
+  const [authorAvatar, setAuthorAvatar] = useState("");
 
   useEffect(() => {
     if (match.params.qid && questions) {
@@ -76,6 +83,14 @@ const Question = ({ match }) => {
     }
   }, [loggedInUser, question]);
 
+  useEffect(() => {
+    if (users && question) {
+      setAuthorAvatar(
+        users.filter((user) => user.id === question.author)[0].avatarURL
+      );
+    }
+  }, [users, question]);
+
   if (question == null) {
     return <StyledLoadingGif src={loadingGif} alt="Loading animation" />;
   }
@@ -83,6 +98,10 @@ const Question = ({ match }) => {
   return (
     question && (
       <QuestionContainer>
+        <StyledAvatar
+          src={authorAvatar}
+          alt="Avatar of user who asked the question"
+        />
         <StyledHeader>
           {!isAnswered ? "Would you rather ..." : "Results"}
         </StyledHeader>
