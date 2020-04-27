@@ -68,9 +68,16 @@ const Question = ({ match }) => {
 
   useEffect(() => {
     if (match.params.qid && questions) {
-      setQuestion(
-        questions.filter((question) => question.id === match.params.qid)[0]
-      );
+      if (
+        questions.filter((question) => question.id === match.params.qid)
+          .length === 0
+      ) {
+        window.location.href = "/404";
+      } else {
+        setQuestion(
+          questions.filter((question) => question.id === match.params.qid)[0]
+        );
+      }
     }
   }, [match.params.qid, questions]);
 
