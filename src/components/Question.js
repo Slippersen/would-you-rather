@@ -136,13 +136,27 @@ const Question = ({ match }) => {
         ) : (
           <>
             <StyledResult>
-              {question.optionOne.text} ({question.optionOne.votes.length} votes
+              {question.optionOne.text} (
+              {Math.round(
+                (question.optionOne.votes.length /
+                  (question.optionOne.votes.length +
+                    question.optionTwo.votes.length)) *
+                  100
+              )}
+              %: {question.optionOne.votes.length} votes
               {question.optionOne.votes.includes(loggedInUser.id) &&
                 " - including yours"}
               )
             </StyledResult>
             <StyledResult>
-              {question.optionTwo.text} ({question.optionTwo.votes.length} votes
+              {question.optionTwo.text} (
+              {Math.round(
+                (question.optionTwo.votes.length /
+                  (question.optionOne.votes.length +
+                    question.optionTwo.votes.length)) *
+                  100
+              )}
+              %: {question.optionTwo.votes.length} votes
               {question.optionTwo.votes.includes(loggedInUser.id) &&
                 " - including yours"}
               )
