@@ -8,6 +8,7 @@ import UsersList from "./components/UsersList";
 import QuestionsList from "./components/QuestionsList";
 import Leaderboard from "./components/Leaderboard";
 import Question from "./components/Question";
+import NewQuestion from "./components/NewQuestion"
 import "./style/App.css";
 
 const StyledHeader = styled.header`
@@ -93,6 +94,10 @@ const App = () => {
           exact
           path="/"
           component={!loggedInUser ? UsersList : QuestionsList}
+        />
+        <Route
+          path="/add"
+          component={!loggedInUser ? UsersList : NewQuestion}
         />
         <Route
           path="/leaderboard"
