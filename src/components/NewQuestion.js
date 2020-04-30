@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { askQuestionAsync } from "../app/questionsSlice";
 
@@ -22,46 +23,58 @@ const StyledOption = styled.span`
   border-radius: 5px;
   padding: 16px;
   margin: 16px;
-
-  :hover {
-    cursor: pointer;
-    background-color: #fefefe;
-  }
 `;
-
-const askQuestion = (dispatch, question) => {
-  dispatch(askQuestionAsync(question));
-};
 
 const NewQuestion = () => {
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.users.loggedInUser);
-  const questions = useSelector((state) => state.questions.questions);
 
-//   const [question, setQuestion] = useState(null);
-//   const [isAnswered, setIsAnswered] = useState(false);
+  const [optionOne, setOptionOne] = useState("");
+  const [optionTwo, setOptionTwo] = useState("");
+  const [asked, setAsked] = useState(false);
 
-//   useEffect(() => {
-//     if (loggedInUser && questions) {
-//       setIsAnswered(
-//         question.optionOne.votes.includes(loggedInUser.id) ||
-//           question.optionTwo.votes.includes(loggedInUser.id)
-//       );
-//     }
-//   }, [loggedInUser, questions]);
+  const askQuestion = () => {
+    let author = loggedInUser.id;
+    let question = {
+      optionOneText: optionOne,
+      optionTwoText: optionTwo,
+      author,
+    };
+    dispatch(askQuestionAsync(question));
+    setAsked(true);
+  };
 
-  return (
+  useEffect(() => {}, [asked]);
+
+  return asked ? (
     <QuestionContainer>
-      <StyledHeader>New question</StyledHeader>
-      {/* <>
-          <StyledOption>
-            {question.optionOne.text}
-          </StyledOption>
-          <StyledOption>
-            {question.optionTwo.text}
-          </StyledOption>
-          <br />
-        </> */}
+      <StyledHeader>Question saved</StyledHeader>
+      <Link to="/">Return to question list</Link>
+    </QuestionContainer>
+  ) : (
+    <QuestionContainer>
+      <StyledHeader>New question (would you rather ...)</StyledHeader>
+      <>
+        <StyledOption>
+          Option one: &nbsp;
+          <input
+            type="text"
+            onChange={(event) => setOptionOne(event.target.value)}
+          />
+        </StyledOption>
+        <StyledOption>
+          Option two: &nbsp;
+          <input
+            type="text"
+            onChange={(event) => setOptionTwo(event.target.value)}
+          />
+        </StyledOption>
+        <br />
+        <br />
+        <br />
+        <br />
+        <button onClick={askQuestion}>Save</button>
+      </>
     </QuestionContainer>
   );
 };
